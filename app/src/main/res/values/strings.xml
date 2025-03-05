@@ -16,5 +16,6 @@
     <string name="topping_pineapple">Pineapple</string>
 
     <string name="placement_prompt">Where do you want %1$s on your pizza?</string>
+    <string name="pizza_preview">Pizza preview</string>
 
 </resources>

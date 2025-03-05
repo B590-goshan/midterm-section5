@@ -41,7 +41,8 @@ android {
 }
 
 dependencies {
-
+    var material3_version = "1.3.1"
+    implementation("androidx.compose.material3:material3:$material3_version")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
