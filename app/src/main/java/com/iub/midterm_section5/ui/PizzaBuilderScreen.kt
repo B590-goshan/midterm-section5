@@ -1,6 +1,7 @@
 package com.iub.midterm_section5.ui
 
 import Pizza
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,7 +9,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,7 +29,8 @@ import com.iub.midterm_section5.model.ToppingPlacement
 import java.text.NumberFormat
 import java.util.Locale
 
-@Preview
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PizzaBuilderScreen(
     modifier: Modifier = Modifier
@@ -33,26 +38,32 @@ fun PizzaBuilderScreen(
 
     var pizza by rememberSaveable { mutableStateOf(Pizza()) }
 
-    Column(
-        modifier = modifier
-    ) {
-        ToppingsList(
-            pizza = pizza,
-            onEditPizza = {pizza = it},
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f, fill = true)
-        )
+    Scaffold(
+        modifier = modifier,
+        topBar = {
+            TopAppBar(
+                title = { Text(stringResource(R.string.app_name)) }
+            )
+        },
+        content = {
+            Column {
+                ToppingsList(
+                    pizza = pizza,
+                    onEditPizza = { pizza = it },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f, fill = true)
+                )
 
-        OrderButton(
-            pizza = pizza,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        )
-    }
-
-
+                OrderButton(
+                    pizza = pizza,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                )
+            }
+        }
+    )
 }
 
 @Composable
@@ -80,6 +91,13 @@ private fun ToppingsList(
     LazyColumn(
         modifier = modifier
     ) {
+        item {
+            PizzaHeroImage(
+                pizza = pizza,
+                modifier = Modifier.padding(16.dp)
+            )
+        }
+
         items(Topping.values()) { topping ->
             ToppingCell(
                 topping = topping,
